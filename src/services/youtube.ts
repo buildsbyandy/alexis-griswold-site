@@ -61,7 +61,8 @@ export class YouTubeService {
     let retries = 0;
     while (retries < this.MAX_RETRIES) {
       try {
-        const response = await fetch('/api/youtube/search', {
+        const CHANNEL_ID = 'UCxJeckUWkEgU6JOChfuxPcQ';
+        const response = await fetch(`/api/youtube/search?channelId=${CHANNEL_ID}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
