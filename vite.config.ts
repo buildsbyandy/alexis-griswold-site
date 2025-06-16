@@ -17,7 +17,7 @@ export default defineConfig({
             url.searchParams.append('key', import.meta.env.VITE_YOUTUBE_API_KEY || '');
             url.searchParams.append('part', 'snippet');
             url.searchParams.append('type', 'video');
-            url.searchParams.append('channelId', 'alexisgriswold');
+            url.searchParams.set('channelId', 'UCxJeckUWkEgU6JOChfuxPcQ');
             url.searchParams.append('maxResults', '10');
             proxyReq.path = url.pathname + url.search;
           });
