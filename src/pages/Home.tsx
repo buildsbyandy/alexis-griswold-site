@@ -25,14 +25,14 @@ const NavButton: FC<NavButtonProps> = ({ icon, text, href }) => (
 
 const Home: FC = () => {
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="w-screen min-h-screen flex flex-col">
       {/* Hero Section */}
       <section 
-        className="relative flex-1 flex flex-col items-center justify-center p-4 md:p-8"
+        className="relative flex-1 flex flex-col items-center justify-center p-4 md:p-8 w-full h-full"
         role="banner"
       >
         {/* Background Video/Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 w-full h-full">
           <video
             className="w-full h-full object-cover"
             autoPlay
@@ -48,7 +48,7 @@ const Home: FC = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center max-w-4xl mx-auto">
+        <div className="relative z-10 text-center w-full h-full flex flex-col items-center justify-center">
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-4">
             Elevate your mind, body and spirit
           </h1>
@@ -57,7 +57,7 @@ const Home: FC = () => {
           </p>
 
           {/* Navigation Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mx-auto">
             <NavButton
               icon={<FaVideo />}
               text="Vlogs"
@@ -78,7 +78,7 @@ const Home: FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-4 text-center bg-[#8F907E] text-white">
+      <footer className="py-4 text-center bg-[#8F907E] text-white w-full">
         <p className="text-sm">© Alexis Griswold</p>
       </footer>
     </main>
