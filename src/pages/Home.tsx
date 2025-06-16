@@ -25,39 +25,34 @@ const NavButton: FC<NavButtonProps> = ({ icon, text, href }) => (
 
 const Home: FC = () => {
   return (
-    <main className="w-screen min-h-screen flex flex-col">
+    <main className="flex flex-col w-screen min-h-screen">
       {/* Hero Section */}
       <section 
-        className="relative flex-1 flex flex-col items-center justify-center p-4 md:p-8 w-full h-full"
+        className="relative flex flex-col items-center justify-center flex-1 w-full h-full p-4 md:p-8"
         role="banner"
       >
-        {/* Background Video/Image */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
-          <video
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/placeholder-bg.jpg"
+          <img
+            src="/test_1.JPG"
+            alt="Background"
+            className="object-cover w-full h-full"
             aria-hidden="true"
-          >
-            <source src="/placeholder-video.mp4" type="video/mp4" />
-          </video>
+          />
           <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center w-full h-full flex flex-col items-center justify-center">
-          <h1 className="font-serif text-4xl md:text-6xl text-white mb-4">
+        <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center">
+          <h1 className="mb-4 font-serif text-4xl text-white md:text-6xl">
             Elevate your mind, body and spirit
           </h1>
-          <p className="text-xl md:text-2xl text-white mb-12">
+          <p className="mb-12 text-xl text-white md:text-2xl">
             with Alexis Griswold
           </p>
 
           {/* Navigation Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mx-auto">
+          <div className="grid w-full max-w-4xl grid-cols-1 gap-6 mx-auto md:grid-cols-3">
             <NavButton
               icon={<FaVideo />}
               text="Vlogs"
