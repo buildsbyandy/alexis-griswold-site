@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Modal from '../components/Modal';
 
 const inspiringMessage = `Living with passion, energy, and confidence starts from within. The recipes and rituals I share here are the foundation of how I fuel my body, mind, and spirit everyday. Every smoothie, every meal, and every moment of self-care is designed to support a vibrant, fast-paced life where you feel light, alive, and ready for anything. This is more than food and tutorials, this is a lifestyle rooted in vitality.`;
@@ -41,23 +42,76 @@ const placeholderRecipes = [
   },
 ];
 
-const placeholderCarousel = [
-  { id: 1, type: 'video', title: 'How to Make a Green Smoothie', thumbnail: '/test_1.jpg', embedUrl: 'https://www.youtube.com/embed/5qap5aO4i9A' },
-  { id: 2, type: 'video', title: 'Meal Prep for the Week', thumbnail: '/test_1.jpg', embedUrl: 'https://www.youtube.com/embed/5qap5aO4i9A' },
-  { id: 3, type: 'video', title: 'Quick Protein Shakes', thumbnail: '/test_1.jpg', embedUrl: 'https://www.youtube.com/embed/5qap5aO4i9A' },
+const shortsVideos = [
+  {
+    id: 'cCBFC74nBo4',
+    title: 'Short 1',
+    embedUrl: 'https://www.youtube.com/embed/cCBFC74nBo4',
+    thumb: 'https://img.youtube.com/vi/cCBFC74nBo4/hqdefault.jpg',
+  },
+  {
+    id: 'nrJr-T049Ak',
+    title: 'Short 2',
+    embedUrl: 'https://www.youtube.com/embed/nrJr-T049Ak',
+    thumb: 'https://img.youtube.com/vi/nrJr-T049Ak/hqdefault.jpg',
+  },
+  {
+    id: 'tCC0hCcN-4E',
+    title: 'Short 3',
+    embedUrl: 'https://www.youtube.com/embed/tCC0hCcN-4E',
+    thumb: 'https://img.youtube.com/vi/tCC0hCcN-4E/hqdefault.jpg',
+  },
+  {
+    id: 'NYq4qGThwgM',
+    title: 'Short 4',
+    embedUrl: 'https://www.youtube.com/embed/NYq4qGThwgM',
+    thumb: 'https://img.youtube.com/vi/NYq4qGThwgM/hqdefault.jpg',
+  },
+  {
+    id: 'b4fDGZ5M9r8',
+    title: 'Short 5',
+    embedUrl: 'https://www.youtube.com/embed/b4fDGZ5M9r8',
+    thumb: 'https://img.youtube.com/vi/b4fDGZ5M9r8/hqdefault.jpg',
+  },
+];
+
+// Get indices for left, center, right (only 3 visible)
+const getThreeVisibleIndices = (activeIndex: number, length: number) => [
+  (activeIndex + length - 1) % length, // left
+  activeIndex,                        // center
+  (activeIndex + 1) % length          // right
 ];
 
 const Recipes: React.FC = () => {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [modalRecipe, setModalRecipe] = useState<typeof placeholderRecipes[0] | null>(null);
-  const [modalCarousel, setModalCarousel] = useState<typeof placeholderCarousel[0] | null>(null);
+  const [modalCarousel, setModalCarousel] = useState<typeof shortsVideos[0] | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const filteredRecipes = placeholderRecipes.filter(recipe => {
     const matchesSearch = recipe.title.toLowerCase().includes(search.toLowerCase()) || recipe.description.toLowerCase().includes(search.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+
+  const handlePrev = () => setActiveIndex((prev) => (prev - 1 + shortsVideos.length) % shortsVideos.length);
+  const handleNext = () => setActiveIndex((prev) => (prev + 1) % shortsVideos.length);
+
+  const visibleIndices = getThreeVisibleIndices(activeIndex, shortsVideos.length);
+
+  // Carousel scroll ref
+  const carouselRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll to the active card
+  React.useEffect(() => {
+    if (carouselRef.current) {
+      const card = carouselRef.current.querySelectorAll('[data-carousel-card]')[activeIndex];
+      if (card && 'scrollIntoView' in card) {
+        (card as HTMLElement).scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }, [activeIndex]);
 
   return (
     <div className="w-screen min-h-screen bg-[#cbb6a6] text-[#383B26] font-serif flex flex-col">
@@ -72,24 +126,61 @@ const Recipes: React.FC = () => {
         </div>
         {/* Carousel (desktop right, mobile below) */}
         <div className="md:w-1/2 w-full flex flex-col items-center justify-center mb-6 md:mb-0">
-          <div className="w-full overflow-x-auto flex gap-6 pb-2">
-            {placeholderCarousel.map(item => (
-              <div
-                key={item.id}
-                className="min-w-[180px] max-w-[240px] aspect-[9/16] bg-[#E3D4C2] rounded-lg shadow-md flex flex-col items-center cursor-pointer relative"
-                onClick={() => setModalCarousel(item)}
-                tabIndex={0}
-                role="button"
-                aria-label={`Open video: ${item.title}`}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setModalCarousel(item); }}
-              >
-                <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover rounded-lg absolute inset-0" style={{ zIndex: 1, opacity: 0.7 }} />
-                <div className="relative z-10 flex flex-col items-center justify-center h-full w-full">
-                  <span className="bg-black/60 text-white rounded-full px-3 py-1 text-xs mb-2 mt-4">YouTube Reel</span>
-                  <p className="font-semibold text-[#654C37] bg-white/80 rounded px-2 py-1 text-center text-sm mt-auto mb-4">{item.title}</p>
+          <div
+            className="flex flex-row justify-center items-center gap-0 w-full max-w-3xl px-2"
+            role="region"
+            aria-label="Recipe video carousel"
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'ArrowLeft') handlePrev();
+              if (e.key === 'ArrowRight') handleNext();
+            }}
+          >
+            {visibleIndices.map((idx, pos) => {
+              const item = shortsVideos[idx];
+              const isActive = pos === 1;
+              const isSide = pos !== 1;
+              return (
+                <div
+                  key={item.id}
+                  className={`snap-center flex-shrink-0 transition-all duration-500 cursor-pointer flex flex-col items-center justify-center
+                    ${isActive ? 'z-10 scale-110 opacity-100' : 'z-5 scale-95 opacity-60'}
+                  `}
+                  style={{ width: '200px', maxWidth: '80vw', marginLeft: isSide ? '-40px' : '0', marginRight: isSide ? '-40px' : '0' }}
+                  onClick={() => { setActiveIndex(idx); setModalCarousel(item); }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Open video: ${item.title}`}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setActiveIndex(idx); setModalCarousel(item); } }}
+                >
+                  <img
+                    src={item.thumb}
+                    alt={item.title}
+                    className="aspect-[9/16] w-full h-auto rounded-xl shadow-lg object-cover"
+                  />
+                  {isActive && (
+                    <span className="bg-black/60 text-white rounded-full px-3 py-1 text-xs mt-2">YouTube Reel</span>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
+          </div>
+          {/* Arrows below carousel */}
+          <div className="flex justify-between w-full max-w-3xl mt-6 px-8">
+            <button
+              className="bg-[#E3D4C2] rounded-full p-2 shadow hover:bg-[#B89178] transition-colors"
+              onClick={handlePrev}
+              aria-label="Previous video"
+            >
+              <FaChevronLeft size={28} />
+            </button>
+            <button
+              className="bg-[#E3D4C2] rounded-full p-2 shadow hover:bg-[#B89178] transition-colors"
+              onClick={handleNext}
+              aria-label="Next video"
+            >
+              <FaChevronRight size={28} />
+            </button>
           </div>
           <span className="sr-only">Recipe video carousel</span>
         </div>
@@ -156,7 +247,6 @@ const Recipes: React.FC = () => {
           <div className="flex flex-col items-center w-full h-full">
             <h3 className="text-2xl font-bold mb-4 text-[#654C37]">{modalCarousel.title}</h3>
             <div className="w-full max-w-xs aspect-[9/16] flex items-center justify-center">
-              {/* Hardcoded embedded video for now */}
               <iframe
                 width="270"
                 height="480"
