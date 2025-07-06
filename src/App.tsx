@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import { Vlogs } from './pages/Vlogs';
 import Recipes from './pages/Recipes';
 import Storefront from './pages/Storefront';
+import Category from './pages/storefront/category';
 import Header from './components/Header';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/vlogs" element={<Vlogs />} />
                 <Route path="/recipes" element={<Recipes />} />
                 <Route path="/store" element={<Storefront />} />
+                <Route path="/store/:category" element={<Category />} />
               </Routes>
             </>
           }
