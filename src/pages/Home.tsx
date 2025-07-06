@@ -1,7 +1,5 @@
 import type { FC } from 'react';
-import VideoBackground from '../components/VideoBackground';
 import NavButton from '../components/NavButton';
-import { siteConfig } from '../config/site.config';
 
 const Home: FC = () => {
   return (
@@ -11,11 +9,32 @@ const Home: FC = () => {
         className="relative flex flex-col items-center justify-center flex-1 w-full h-full p-4 md:p-8"
         role="banner"
       >
-        {/* Background Video */}
-        <VideoBackground 
-          src={siteConfig.home.backgroundVideo.src}
-          poster={siteConfig.home.backgroundVideo.poster}
-        />
+        {/* Responsive Background: Video (desktop) + Image (fallback/mobile) */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          {/* Image fallback - always visible, behind video on desktop */}
+          <img
+            src="/test_1.jpg"
+            alt=""
+            className="object-cover w-full h-full"
+            aria-hidden="true"
+          />
+          
+          {/* Video background - only visible on desktop (md+) with 80% opacity */}
+          <video
+            src="/alexisHome.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 object-cover w-full h-full opacity-80 md:block hidden"
+            aria-label="Video behind the scenes of Alexis Griswold at a photoshoot."
+            aria-hidden="true"
+            tabIndex={-1}
+          />
+          
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
+        </div>
 
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center">
