@@ -82,7 +82,7 @@ export const Vlogs: React.FC = () => {
   return (
     <div className="w-screen min-h-screen bg-[#cbb6a6] font-serif flex flex-col">
       <header className="py-8 text-center">
-        <h1 className="text-5xl font-bold text-[#383B26] mb-2">Media</h1>
+        <h1 className="text-5xl font-bold text-black mb-2">Media</h1>
         <p className="text-2xl italic text-[#654C37]">See life through my eyes</p>
       </header>
       <div className="flex flex-1 gap-8 px-8 pb-8 w-full h-full">

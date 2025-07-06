@@ -119,7 +119,7 @@ const Recipes: React.FC = () => {
       <section className="flex flex-col md:flex-row w-full max-w-7xl mx-auto py-16 px-4 gap-12 md:gap-24 items-center min-h-screen">
         {/* Inspiring Message */}
         <div className="md:w-1/2 w-full flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-3xl md:text-5xl font-bold mb-8 tracking-wide text-center md:text-left">RECIPES & TUTORIALS</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 tracking-wide text-center md:text-left text-black">RECIPES & TUTORIALS</h2>
           <p className="text-lg md:text-xl leading-relaxed max-w-xl text-center md:text-left whitespace-pre-line">
             {inspiringMessage}
           </p>
