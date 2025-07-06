@@ -58,6 +58,14 @@ export const siteConfig = {
     },
   },
 
+  // Home page configuration
+  home: {
+    backgroundVideo: {
+      src: "/background-video.mp4", // Add your video file to public directory
+      poster: "/test_1.JPG", // Fallback image while video loads
+    },
+  },
+
   // Vlogs page configuration
   vlogs: {
     gridLayout: {
