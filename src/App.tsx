@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import { Vlogs } from './pages/Vlogs';
 import Recipes from './pages/Recipes';
-import Storefront from './pages/Storefront';
-import Category from './pages/storefront/category';
+import StorefrontPage from './pages/StorefrontPage';
+import CategoryPage from './pages/storefront/CategoryPage';
 import Header from './components/Header';
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
               <Routes>
                 <Route path="/vlogs" element={<Vlogs />} />
                 <Route path="/recipes" element={<Recipes />} />
-                <Route path="/store" element={<Storefront />} />
-                <Route path="/store/:category" element={<Category />} />
+                <Route path="/store" element={<StorefrontPage />} />
+                <Route path="/storefront/:category" element={<CategoryPage />} />
               </Routes>
             </>
           }
